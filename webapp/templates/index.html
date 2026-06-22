@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LCDL Legacy Transcripts</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand">LCDL Legacy Transcripts</span>
+    <a href="/logout" class="muted">Sign out</a>
+  </header>
+
+  <main class="card">
+    <h1>Download &amp; convert transcripts</h1>
+    <p class="muted">
+      Pick an Aviary collection, upload your CSV of legacy materials, and choose
+      what you want back. The CSV needs the columns
+      <code>rspace-id</code>, <code>collectiontitle</code>, <code>filepath</code>.
+    </p>
+
+    <form id="job-form" method="post" action="/jobs" enctype="multipart/form-data">
+      <label for="collection">Aviary collection</label>
+      <div class="row">
+        <select id="collection" name="collection_id" required disabled>
+          <option value="">Loading collections…</option>
+        </select>
+        <button type="button" id="reload-collections" class="ghost" title="Reload">↻</button>
+      </div>
+      <input type="hidden" name="collection_title" id="collection_title">
+      <p id="collections-error" class="error" hidden></p>
+
+      <label for="csv_file">CSV file</label>
+      <input type="file" id="csv_file" name="csv_file" accept=".csv,text/csv" required>
+
+      <fieldset>
+        <legend>What do you want back?</legend>
+        <label class="check"><input type="checkbox" name="formats" value="txt" checked> Converted text (.txt)</label>
+        <label class="check"><input type="checkbox" name="formats" value="pdf"> Original PDFs (.pdf)</label>
+      </fieldset>
+
+      <label class="check">
+        <input type="checkbox" name="strip_timestamps" value="true">
+        Strip timestamp columns (MM:SS) from the text
+      </label>
+
+      <button type="submit" class="primary">Start job</button>
+    </form>
+  </main>
+
+  <script src="/static/index.js"></script>
+</body>
+</html>
